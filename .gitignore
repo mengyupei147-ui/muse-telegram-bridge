@@ -1,0 +1,13 @@
+# Runtime state (never commit)
+data/
+*.jsonl
+media/
+typing-*.pid
+
+# Python
+__pycache__/
+*.pyc
+
+# Secrets and local config
+.env
+config.json
