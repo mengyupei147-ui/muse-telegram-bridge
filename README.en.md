@@ -1,8 +1,20 @@
-# Telegram Bridge
+# Muse Telegram Bridge — Multimodal Messaging & Multi-Agent Group Chat
 
 Connect a personal AI assistant to Telegram: long-poll the Bot API for incoming messages, append them to an on-disk queue, and let a worker (your own agent or service) process them and reply. The core is three stages — **long-poll → queue → send** — and the worker is intentionally left to the deployer, because which runtime and agent framework it runs on differs for everyone. This project does not decide that part for you.
 
 中文版：[README.md](README.md)
+
+## Highlights
+
+**1. Multi-Agent Group Chat**
+
+Multiple AI agents share context in the same Telegram group, with replies controlled by @mentions, broadcast words, and a read-only message mechanism, so they don't interfere with each other.
+
+**2. Multimodal Messaging**
+
+Send and receive text, images, video, voice, audio, and files. Whether Muse understands a given piece of content depends on the Worker and the model's capabilities.
+
+> Note: what is published here is the communication bridge skeleton, not a ready-to-use complete multi-agent system. What is already proven in practice is that this collaboration pattern is running in our own Telegram group.
 
 ## What this is
 

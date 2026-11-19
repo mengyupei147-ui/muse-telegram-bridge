@@ -1,8 +1,20 @@
-# Telegram 桥
+# Muse Telegram Bridge — Multimodal Messaging & Multi-Agent Group Chat
 
 把一个个人 AI 助理接进 Telegram：基于 Bot API 长轮询收消息，落盘队列，再由 worker（你自己的 agent 或服务）处理并回消息。核心是三段式：**长轮询 → 队列 → 发送**，中间的 worker 由部署者自己实现——因为 worker 跑在什么运行时上、用什么 agent 框架，每个人都不一样，这部分本项目故意不替你定。
 
 English version: [README.en.md](README.en.md)
+
+## 核心卖点
+
+**1. Multi-Agent Group Chat（多 Agent 群聊）**
+
+多个 AI Agent 在同一个 Telegram 群里获取上下文，通过 @提及、广播词、只读消息机制控制回复，减少互相干扰。
+
+**2. Multimodal Messaging（多模态消息）**
+
+支持文本、图片、视频、语音、音频和文件的接收与发送。至于 Muse 能否理解相应内容，则取决于 Worker 和模型能力。
+
+> 准确说明：目前公开的是通信桥接骨架，并非开箱即用的完整多 Agent 系统。真正已经跑通的，是我们在自己的 Telegram 群里把这套协作方式实际用起来了。
 
 ## 这是什么
 
