@@ -12,6 +12,15 @@ Connect a personal AI assistant to Telegram: long-poll the Bot API for incoming 
 - `append_history.py` does exactly one thing: append a conversation line to `history.jsonl`.
 - Who reads the queue, generates replies, and decides what to say? That is the worker's job. This project only defines the queue format (below); you connect the worker yourself.
 
+## Using it with Muse
+
+This bridge was written for Muse (Meta's personal AI assistant): Muse is the worker, and the bridge only turns Telegram into one more chat surface for it.
+
+- **Division of labor**: Muse thinks, looks things up, writes, and decides; the bridge receives and sends messages. Muse's own tools, memory, and files are not limited by the bridge — the bridge only adds a chat entry point.
+- **How to connect it**: the deployer needs a trigger that wakes a Muse session when new messages appear in `queue.jsonl` (for example a file watcher, a periodic check, or your own hook). The trigger mechanism is the deployer's choice; this project does not prescribe it.
+- **What Muse does**: Muse claims the queue (rename it with `mv` to a processing file), reads the records in `update_id` order, and processes them following the rules in "How a worker processes queue.jsonl": merge consecutive messages into one round, show typing while generating, stop it automatically before sending, and append to history after sending.
+- **Proactive push**: any program (including Muse itself) can call `send_message.py` directly to send a message, without waiting for the user to message first.
+
 ## Architecture
 
 ```

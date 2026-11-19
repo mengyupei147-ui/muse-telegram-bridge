@@ -12,6 +12,15 @@ English version: [README.en.md](README.en.md)
 - `append_history.py` 只做一件事：把对话记进 `history.jsonl`。
 - 谁来读队列、生成回复、决定回什么？那是 worker 的事。本项目只规定队列的格式（见下文），worker 由你自己接。
 
+## 与 Muse 集成
+
+这个桥是为 Muse（Meta 的个人 AI 助理）写的：Muse 当 worker，桥只负责把 Telegram 变成 Muse 的一个聊天界面。
+
+- **分工**：Muse 负责想、查、写、做决定；桥负责收消息、发消息。Muse 自己的工具、记忆和文件都不受桥的限制——桥只是多了一个聊天入口。
+- **怎么接上**：部署者需要一个触发器，在 `queue.jsonl` 出现新消息时唤醒一个 Muse 会话（比如文件监听、定时检查、或者你自己的 hook）。触发方式由部署者自己选，本项目不规定。
+- **Muse 怎么做**：Muse 认领队列（`mv` 成 processing 文件）、按 `update_id` 顺序读记录、按“Worker 如何处理 queue.jsonl”那一节的规矩处理：连发合并成一轮、生成时亮 typing、发之前自动停、发完记 history。
+- **主动推送**：任何程序（包括 Muse 自己）都可以直接调 `send_message.py` 发消息，不用等用户先发。
+
 ## 架构
 
 ```
